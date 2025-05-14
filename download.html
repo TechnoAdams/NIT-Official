@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Download | Nit</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="overlay">
+    <header>
+      <h1 class="logo">Nit Downloads</h1>
+      <nav>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="documentation.html">Documentation</a></li>
+          <li><a href="download.html">Download</a></li>
+          <li><a href="https://www.youtube.com/channel/UCwekCW91hIzgsW7vFcOzhfQ" target="_blank">Community</a></li>
+        </ul>
+      </nav>
+    </header>
+    <main>
+      <h2>Download Center</h2>
+      <button onclick="downloadFile('NitCodeEditor.zip')">Download NitCodeEditor</button>
+      <button onclick="downloadFile('UnisonGameEngine.jar')">Download Unison Game Engine</button>
+    </main>
+  </div>
+
+  <script>
+    function downloadFile(fileName) {
+      const link = document.createElement("a");
+      link.href = fileName;
+
+      // Setting the correct MIME type for each file
+      if (fileName.endsWith('.zip')) {
+        link.download = 'NitCodeEditor.zip'; // For NitCodeEditor (zip)
+      } else if (fileName.endsWith('.jar')) {
+        link.download = 'UnisonGameEngine.jar'; // For Unison Game Engine (jar)
+      }
+      link.click();
+    }
+  </script>
+</body>
+</html>
+

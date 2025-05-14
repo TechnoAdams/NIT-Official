@@ -1,0 +1,662 @@
+/* CSS Variables (no changes needed here, previous variables are fine) */
+:root {
+    --primary-color: #ff8c00; /* Original orange */
+    --primary-color-dark: #e67300; /* Darker orange for hover */
+    --secondary-color: #ffcc00; /* Yellow accent */
+    --text-color-light: #ffffff;
+    --text-color-dark: #333333; /* For sections with light backgrounds */
+    --overlay-color: rgba(0, 0, 0, 0.7); /* Slightly darker overlay */
+    --background-image: url('Nit.png'); /* Make sure Nit.png is in the same directory or provide the correct path */
+    --font-family-body: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    --font-family-heading: 'Montserrat', sans-serif; /* Example of a different heading font */
+    --font-family-code: 'Fira Code', monospace; /* Font for code/editor areas */
+
+    --spacing-unit: 20px;
+    --border-radius: 8px;
+    --box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    --transition-speed: 0.3s;
+
+    /* Editor specific colors */
+    --editor-bg: #1e1e1e; /* Dark background */
+    --editor-text: #cccccc; /* Light text */
+    --editor-panel-bg: #252526; /* Slightly different dark background for panels */
+    --editor-border: #333333;
+    --file-tree-link: #bbbbbb;
+    --file-tree-link-hover: #ffffff;
+}
+
+/* Basic Reset/Box Sizing */
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
+/* Smooth scrolling for anchor links */
+html {
+    scroll-behavior: smooth;
+}
+
+/* Body Styles */
+body {
+    margin: 0;
+    font-family: var(--font-family-body);
+    color: var(--text-color-light); /* Default text color */
+    background: var(--background-image) no-repeat center center fixed;
+    background-size: cover;
+    animation: fadeIn 2s ease-in-out;
+    line-height: 1.6; /* Improve readability */
+    min-height: 100vh; /* Ensure body takes at least full viewport height */
+    display: flex; /* Use flex to make overlay fill height if needed */
+    flex-direction: column;
+}
+
+/* Overlay to improve text readability on background image */
+.overlay {
+    background-color: var(--overlay-color);
+    min-height: 100vh;
+    padding: var(--spacing-unit); /* Add padding around the content */
+    display: flex; /* Use flexbox for better layout control */
+    flex-direction: column; /* Stack header, main, footer vertically */
+    flex-grow: 1; /* Allow overlay to grow and fill body height */
+}
+
+/* Header Styles */
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--spacing-unit) 0; /* Padding top/bottom */
+    margin-bottom: var(--spacing-unit) * 1.5; /* Space below header */
+    flex-shrink: 0; /* Prevent header from shrinking */
+}
+
+.logo {
+    font-family: var(--font-family-heading); /* Use heading font for logo */
+    font-size: 2.5rem; /* Slightly larger logo */
+    font-weight: bold;
+    color: var(--secondary-color); /* Logo color */
+    animation: slideDown 1s ease-out;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3); /* Add subtle text shadow */
+}
+
+/* Navigation Styles */
+nav ul {
+    list-style: none;
+    display: flex;
+    gap: var(--spacing-unit); /* Use variable for gap */
+    margin: 0;
+    padding: 0;
+}
+
+nav ul li a {
+    color: var(--text-color-light);
+    text-decoration: none;
+    font-weight: bold;
+    position: relative; /* Needed for underline effect */
+    transition: color var(--transition-speed) ease;
+    padding-bottom: 4px; /* Space for the underline */
+}
+
+/* Active nav link style */
+nav ul li a.active {
+    color: var(--secondary-color);
+}
+
+nav ul li a::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 0;
+    height: 2px;
+    background-color: var(--secondary-color);
+    transition: width var(--transition-speed) ease;
+}
+
+nav ul li a:hover,
+nav ul li a:focus { /* Add focus state for accessibility */
+    color: var(--secondary-color);
+}
+
+/* Underline expands on hover/focus OR if it's the active link */
+nav ul li a:hover::after,
+nav ul li a:focus::after,
+nav ul li a.active::after {
+    width: 100%;
+}
+
+/* Main Content Area (Hero Section for index.html) */
+/* This main style applies to index.html's main content */
+main:not(.live-preview-container) { /* Target main only if it's NOT the live preview */
+    flex-grow: 1; /* Allow main content to grow and fill space */
+    text-align: center;
+    margin: auto; /* Auto margins in flex container center the item */
+    padding: var(--spacing-unit) 0; /* Add some vertical padding */
+    animation: fadeInUp 1.2s ease-in-out;
+    max-width: 900px; /* Limit max width of main content */
+    width: 100%; /* Ensure it takes available width */
+}
+
+main:not(.live-preview-container) h1 {
+    font-family: var(--font-family-heading);
+    font-size: 4rem; /* Larger main heading */
+    margin-bottom: var(--spacing-unit) / 2;
+    text-shadow: var(--box-shadow);
+}
+
+main:not(.live-preview-container) h2 {
+    font-family: var(--font-family-heading);
+    font-size: 2.8rem; /* Slightly larger h2 */
+    margin-bottom: var(--spacing-unit) / 2;
+    text-shadow: var(--box-shadow);
+}
+
+main:not(.live-preview-container) p {
+    font-size: 1.3rem; /* Slightly larger paragraph */
+    margin: 0 auto var(--spacing-unit) * 2; /* Space below paragraph */
+    max-width: 800px; /* Keep max width */
+    opacity: 0.9; /* Slight transparency for readability */
+}
+
+
+/* Live Preview Container Styles */
+/* This main style applies specifically to the live-preview.html main content */
+main.live-preview-container {
+    flex-grow: 1; /* Allow main to grow and fill space */
+    padding: var(--spacing-unit) 0; /* Padding for top/bottom */
+    max-width: 1200px; /* Wider max width for demo content */
+    width: 100%;
+    margin: 0 auto; /* Center the container */
+    display: flex; /* Use flexbox for internal layout */
+    flex-direction: column; /* Stack sections vertically */
+    gap: var(--spacing-unit) * 2; /* Space between sections */
+}
+
+main.live-preview-container h2 {
+    font-family: var(--font-family-heading);
+    font-size: 2.5rem;
+    text-align: center;
+    margin-bottom: var(--spacing-unit); /* Space below the main title */
+    text-shadow: var(--box-shadow);
+}
+
+main.live-preview-container > p { /* Target the direct paragraph below main h2 */
+    font-size: 1.1rem;
+    text-align: center;
+    margin: 0 auto var(--spacing-unit); /* Space below this paragraph */
+    max-width: 700px;
+    opacity: 0.8;
+}
+
+/* Styles for individual demo sections */
+.demo-section {
+    background-color: rgba(255, 255, 255, 0.05); /* Subtle background */
+    padding: var(--spacing-unit) * 1.5;
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+    text-align: center; /* Default alignment */
+}
+
+.demo-section h3 {
+    font-family: var(--font-family-heading);
+    font-size: 2rem;
+    margin-top: 0;
+    margin-bottom: var(--spacing-unit) / 2;
+    color: var(--secondary-color); /* Highlight section titles */
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+.demo-section p {
+    font-size: 1rem;
+    margin-bottom: var(--spacing-unit);
+    opacity: 0.9;
+}
+
+.demo-note {
+    font-size: 0.9rem;
+    opacity: 0.7;
+    margin-top: var(--spacing-unit) / 2;
+    font-style: italic;
+}
+
+
+/* Button Styles */
+button, .btn {
+    display: inline-block; /* Ensure padding works correctly */
+    padding: 14px 28px; /* Slightly more padding */
+    margin: var(--spacing-unit) / 2; /* Use variable spacing */
+    font-size: 1.1rem; /* Slightly larger font */
+    font-weight: bold;
+    background-color: var(--primary-color);
+    color: var(--text-color-light);
+    border: 2px solid var(--primary-color); /* Add border for outline style later */
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    transition: background var(--transition-speed) ease, border-color var(--transition-speed) ease, color var(--transition-speed) ease, transform var(--transition-speed) ease;
+    text-decoration: none; /* Ensure .btn link doesn't have underline */
+    -webkit-appearance: none; /* Reset default button appearance */
+    -moz-appearance: none;
+    appearance: none;
+    outline-color: var(--secondary-color); /* Accessible outline color */
+}
+
+button:hover, .btn:hover,
+button:focus, .btn:focus { /* Add focus state */
+    background-color: var(--primary-color-dark);
+    border-color: var(--primary-color-dark);
+    transform: translateY(-2px); /* Subtle lift effect */
+    box-shadow: var(--box-shadow); /* Add shadow on hover/focus */
+    /* outline: none; -- Re-enabled outline-color for better accessibility */
+}
+
+button:active, .btn:active {
+    transform: translateY(0); /* Push down effect on click */
+    box-shadow: none;
+}
+
+/* Secondary Button (Outline style) */
+.btn-outline {
+    background-color: transparent;
+    color: var(--primary-color);
+    border-color: var(--primary-color);
+}
+
+.btn-outline:hover, .btn-outline:focus {
+    background-color: var(--primary-color);
+    color: var(--text-color-light);
+    border-color: var(--primary-color-dark); /* Can keep primary or darken */
+}
+
+/* --- Additional Sections & Components (from previous turn) --- */
+/* Keeping these generic section styles in case you use them elsewhere */
+.section {
+    padding: var(--spacing-unit) * 3 var(--spacing-unit); /* More vertical padding */
+    text-align: center;
+    color: var(--text-color-dark); /* Default text color for sections */
+    background-color: var(--text-color-light); /* Default light background */
+    margin-top: var(--spacing-unit) * 2; /* Space between sections */
+}
+
+.section:nth-of-type(even) { /* Alternate background for even sections */
+    background-color: #f4f4f4; /* Light grey */
+}
+
+.section h2 { /* Styling for section headings */
+    font-family: var(--font-family-heading);
+    font-size: 2.5rem;
+    margin-bottom: var(--spacing-unit) * 2;
+    color: var(--primary-color-dark);
+}
+/* ... other existing styles like cards, forms ... */
+
+
+/* --- Live Preview Editor Layout Styles (within .demo-section) --- */
+.editor-layout {
+    display: flex; /* Arrange file tree and editor area side-by-side */
+    height: 60vh; /* Adjust height to fit within a section */
+    gap: var(--spacing-unit);
+    border: 1px solid var(--editor-border);
+    border-radius: var(--border-radius);
+    overflow: hidden; /* Hide overflow, useful if panels have max-height */
+    box-shadow: inset 0 0 10px rgba(0,0,0,0.3); /* Inner shadow for embedded feel */
+    background-color: var(--editor-panel-bg); /* Background for the whole layout */
+    max-width: 1000px; /* Limit editor width */
+    margin: 0 auto; /* Center the editor layout */
+}
+
+.file-tree-panel {
+    width: 200px; /* Fixed width for file tree */
+    background-color: var(--editor-panel-bg);
+    padding: var(--spacing-unit) / 2;
+    border-right: 1px solid var(--editor-border);
+    overflow-y: auto; /* Add scroll if content overflows */
+    flex-shrink: 0; /* Prevent shrinking */
+    text-align: left; /* Align file tree text left */
+}
+
+.file-tree-panel h3 {
+    font-size: 1.1rem;
+    margin-top: 0;
+    margin-bottom: var(--spacing-unit) / 2;
+    color: var(--file-tree-link-hover); /* Lighter heading */
+    text-align: left;
+}
+
+.file-tree-panel ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.file-tree-panel li {
+    margin-bottom: 5px;
+}
+
+.file-tree-panel a {
+    color: var(--file-tree-link);
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: color var(--transition-speed) ease;
+    display: block; /* Make the whole area clickable */
+    padding: 2px 0;
+}
+
+.file-tree-panel a:hover,
+.file-tree-panel a:focus {
+    color: var(--file-tree-link-hover);
+    text-decoration: underline;
+}
+
+.editor-and-output {
+    flex-grow: 1; /* Allow editor and output to take remaining width */
+    display: flex;
+    flex-direction: column; /* Stack editor above output */
+    background-color: var(--editor-bg); /* Dark editor background */
+    color: var(--editor-text); /* Light editor text */
+    min-width: 0; /* Allow flex item to shrink */
+}
+
+.code-editor-panel {
+    flex-grow: 1; /* Allow editor to take most of the height */
+    display: flex;
+    flex-direction: column; /* Stack header and editor content */
+    min-height: 0; /* Important for flex-grow in nested flex containers */
+}
+
+.editor-header {
+    padding: 8px var(--spacing-unit) / 2;
+    background-color: var(--editor-panel-bg); /* Slightly different background for tab bar */
+    border-bottom: 1px solid var(--editor-border);
+    font-size: 0.9rem;
+    color: var(--file-tree-link);
+    flex-shrink: 0; /* Prevent header from shrinking */
+}
+
+.code-editor {
+    flex-grow: 1;
+    padding: var(--spacing-unit) / 2;
+    font-family: var(--font-family-code); /* Use monospace font */
+    font-size: 1rem;
+    line-height: 1.5;
+    white-space: pre-wrap; /* Preserve whitespace and wrap text */
+    overflow-y: auto; /* Add scroll if code overflows vertically */
+    outline: none; /* Remove default focus outline */
+    caret-color: var(--secondary-color); /* Style the typing cursor */
+}
+
+.code-editor:focus {
+    /* Optional: Add a subtle indicator when the editor is focused */
+    /* box-shadow: inset 0 0 5px rgba(255, 204, 0, 0.3); */
+}
+
+
+.output-panel {
+    height: 150px; /* Fixed height for output panel */
+    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent dark background */
+    color: #00ff00; /* Green text for console feel */
+    padding: var(--spacing-unit) / 2;
+    border-top: 1px solid var(--editor-border);
+    overflow-y: auto; /* Add scroll if output overflows */
+    flex-shrink: 0; /* Prevent shrinking */
+    font-family: var(--font-family-code); /* Monospace font for output */
+    font-size: 0.9rem;
+    text-align: left; /* Align output text left */
+}
+
+.output-panel h3 {
+    font-size: 1rem;
+    margin-top: 0;
+    margin-bottom: var(--spacing-unit) / 4;
+    color: var(--editor-text); /* Heading color */
+    text-align: left;
+}
+
+.output-console {
+    margin: 0;
+    white-space: pre-wrap; /* Preserve whitespace and wrap */
+    word-break: break-all; /* Break long words if necessary */
+}
+
+/* --- Video Container Styles (within .demo-section) --- */
+.video-container {
+    position: relative; /* Needed for aspect ratio trick */
+    width: 100%;
+    padding-bottom: 56.25%; /* 16:9 Aspect Ratio (9 / 16 * 100) */
+    height: 0;
+    overflow: hidden;
+    background-color: #000; /* Black background for empty space */
+    margin: 0 auto; /* Center the video container */
+    max-width: 800px; /* Limit video width */
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+}
+
+.video-container iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+
+/* Footer Styling */
+footer {
+    background-color: rgba(0, 0, 0, 0.8); /* Darker footer background */
+    color: rgba(255, 255, 255, 0.8); /* Slightly transparent white */
+    text-align: center;
+    padding: var(--spacing-unit) * 1.5;
+    margin-top: auto; /* Pushes the footer to the bottom in the flex column */
+    flex-shrink: 0; /* Prevent footer from shrinking */
+}
+
+footer p {
+    margin: 0;
+    font-size: 0.9rem;
+}
+
+/* --- Animations --- */
+@keyframes fadeIn {
+    from {opacity: 0;}
+    to {opacity: 1;}
+}
+
+@keyframes fadeInUp {
+    from {opacity: 0; transform: translateY(30px);} /* Slightly larger initial move */
+    to {opacity: 1; transform: translateY(0);}
+}
+
+@keyframes slideDown {
+    from {transform: translateY(-60px); opacity: 0;} /* Slightly larger initial move */
+    to {transform: translateY(0); opacity: 1;}
+}
+
+/* --- Responsive Design --- */
+@media (max-width: 992px) {
+    /* Editor layout stacking */
+    .editor-layout {
+        flex-direction: column; /* Stack editor panels vertically */
+        height: auto; /* Allow height to be determined by content */
+        max-width: 90%; /* Adjust max width */
+    }
+
+    .file-tree-panel {
+        width: 100%; /* File tree takes full width */
+        height: 200px; /* Give it a fixed height */
+        border-right: none;
+        border-bottom: 1px solid var(--editor-border); /* Add bottom border */
+    }
+
+    .editor-and-output {
+         height: auto; /* Allow height to be determined by children */
+    }
+     .code-editor-panel {
+        height: 40vh; /* Give editor a flexible height */
+     }
+
+    .output-panel {
+        height: 150px; /* Keep output height fixed */
+    }
+
+    /* Adjust index.html specific main styles if needed */
+    main:not(.live-preview-container) { /* Applies to index.html main */
+        margin-top: 10%; /* Less margin from top */
+    }
+}
+
+
+@media (max-width: 768px) {
+    .overlay {
+        padding: var(--spacing-unit) / 2; /* Less padding on smaller screens */
+    }
+
+    header {
+        flex-direction: column; /* Stack logo and nav */
+        gap: var(--spacing-unit);
+        padding: var(--spacing-unit) / 2 0; /* Adjust padding */
+        margin-bottom: var(--spacing-unit);
+    }
+
+    .logo {
+        font-size: 2rem; /* Smaller logo */
+    }
+
+    nav ul {
+        gap: var(--spacing-unit) / 2; /* Smaller nav gap */
+        justify-content: center; /* Center nav items */
+        flex-wrap: wrap; /* Allow nav items to wrap */
+    }
+
+    /* Index page main adjustments */
+     main:not(.live-preview-container) { /* Select main only if it's NOT the live preview */
+        margin-top: 10%; /* Less margin from top */
+     }
+
+    main:not(.live-preview-container) h1 {
+        font-size: 2.8rem; /* Smaller h1 */
+    }
+
+    main:not(.live-preview-container) h2 {
+        font-size: 2rem; /* Smaller h2 */
+    }
+
+    main:not(.live-preview-container) p {
+        font-size: 1rem; /* Smaller paragraph */
+        margin-bottom: var(--spacing-unit);
+    }
+
+    button, .btn {
+        padding: 10px 20px; /* Smaller buttons */
+        font-size: 1rem;
+        margin: var(--spacing-unit) / 4; /* Less margin */
+    }
+
+    /* Live preview specific adjustments */
+    main.live-preview-container {
+        gap: var(--spacing-unit); /* Smaller gap between sections */
+        padding: var(--spacing-unit) / 2 0;
+    }
+
+    main.live-preview-container h2 {
+        font-size: 2rem;
+    }
+
+    main.live-preview-container > p { /* Direct paragraph below main h2 */
+        font-size: 1rem;
+        margin-bottom: var(--spacing-unit);
+    }
+
+     .demo-section {
+         padding: var(--spacing-unit); /* Smaller padding inside sections */
+     }
+
+    .demo-section h3 {
+        font-size: 1.8rem;
+    }
+
+    .file-tree-panel {
+         height: 150px; /* Smaller file tree height */
+         padding: var(--spacing-unit) / 4;
+    }
+     .code-editor-panel {
+         height: 35vh; /* Adjust editor height */
+         padding: var(--spacing-unit) / 4;
+     }
+    .output-panel {
+        height: 120px; /* Smaller output height */
+        padding: var(--spacing-unit) / 4;
+    }
+    .editor-header {
+         padding: 6px var(--spacing-unit) / 4;
+    }
+
+     .video-container {
+         max-width: 90%; /* Adjust max width */
+     }
+}
+
+@media (max-width: 480px) {
+    .logo {
+        font-size: 1.8rem;
+    }
+
+    nav ul {
+        flex-direction: column; /* Stack nav links */
+        align-items: center;
+        gap: var(--spacing-unit) / 4;
+    }
+
+     /* Index page main adjustments */
+     main:not(.live-preview-container) h1 {
+        font-size: 2.2rem;
+    }
+
+     main:not(.live-preview-container) h2 {
+         font-size: 1.6rem;
+    }
+
+     main:not(.live-preview-container) p {
+        font-size: 0.9rem;
+    }
+
+    button, .btn {
+        width: 80%; /* Make buttons wider */
+        max-width: 250px; /* Limit max width */
+        display: block; /* Stack buttons */
+        margin: var(--spacing-unit) / 2 auto; /* Center buttons */
+    }
+
+    /* Live preview specific adjustments */
+    main.live-preview-container h2 {
+        font-size: 1.8rem;
+         margin-bottom: var(--spacing-unit) / 2;
+    }
+     main.live-preview-container > p { /* Direct paragraph below main h2 */
+         font-size: 0.9rem;
+         margin-bottom: var(--spacing-unit);
+     }
+
+     .demo-section h3 {
+        font-size: 1.6rem;
+    }
+
+    .file-tree-panel,
+    .code-editor-panel,
+    .output-panel {
+         font-size: 0.85rem; /* Smaller font in panels */
+    }
+
+     .code-editor {
+         padding: var(--spacing-unit) / 4;
+     }
+     .output-panel {
+         height: 100px; /* Even smaller output height */
+     }
+
+     .demo-section .btn { /* Buttons within sections get specific mobile styles */
+         width: auto; /* Revert width */
+         max-width: none; /* Revert max width */
+         display: inline-block; /* Revert display */
+         margin: var(--spacing-unit) / 4; /* Adjust margin */
+         font-size: 1rem;
+     }
+}
